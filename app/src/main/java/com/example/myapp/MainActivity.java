@@ -11,8 +11,8 @@ import android.view.View;
 
 import android.widget.ListView;
 
-import com.example.myapp.Adapter.ModelAdapter;
-import com.example.myapp.Model.Model;
+import com.example.myapp.Adapter.PresetAdapter;
+import com.example.myapp.Model.Preset;
 import com.example.myapp.Retrofit.ApiService;
 import com.example.myapp.Retrofit.RetrofitClient;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -28,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
     private ListView listView;
     private View parentView;
 
-    private ArrayList<Model> modelList;
-    private ModelAdapter adapter;
+    private ArrayList<Preset> presetList;
+    private PresetAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        modelList = new ArrayList<>();
+        presetList = new ArrayList<>();
 
         parentView = findViewById(R.id.parentLayout);
 
@@ -58,18 +58,18 @@ public class MainActivity extends AppCompatActivity {
 
                     ApiService api = RetrofitClient.getApiService();
 
-                    Call<Model> call = api.getMyJSON();
+                    Call<Preset> call = api.getMyJSON();
 
-                    call.enqueue(new Callback<Model>() {
+                    call.enqueue(new Callback<Preset>() {
                         @Override
-                        public void onResponse(Call<Model> call, Response<Model> response) {
+                        public void onResponse(Call<Preset> call, Response<Preset> response) {
                             dialog.dismiss();
 
                             if (response.isSuccessful()) {
 
-                                modelList = response.body().getPresets();
+                                presetList = response.body().getPresets().values();
 
-                                adapter = new ModelAdapter(MainActivity.this, modelList);
+                                adapter = new PresetAdapter(MainActivity.this, presetList);
                                 listView.setAdapter(adapter);
 
                             } else {
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                         }
 
                         @Override
-                        public void onFailure(Call<Model> call, Throwable t) {
+                        public void onFailure(Call<Preset> call, Throwable t) {
                             dialog.dismiss();
                         }
                     });

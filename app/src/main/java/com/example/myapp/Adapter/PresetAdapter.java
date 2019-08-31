@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
 
-import com.example.myapp.Model.Model;
+import com.example.myapp.Model.Preset;
 import com.example.myapp.R;
 import com.squareup.picasso.Picasso;
 
@@ -16,21 +16,21 @@ import android.widget.ImageView;
 import java.util.List;
 import android.widget.TextView;
 
-public class ModelAdapter extends ArrayAdapter<Model> {
-   List<Model> modelList;
+public class PresetAdapter extends ArrayAdapter<Preset> {
+   List<Preset> presetList;
    Context context;
    private LayoutInflater mInflater;
 
-    public ModelAdapter(Context context, List<Model> objects) {
+    public PresetAdapter(Context context, List<Preset> objects) {
         super(context, 0, objects);
         this.context = context;
         this.mInflater = LayoutInflater.from(context);
-        modelList = objects;
+        presetList = objects;
     }
 
     @Override
-    public Model getItem(int position) {
-        return modelList.get(position);
+    public Preset getItem(int position) {
+        return presetList.get(position);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class ModelAdapter extends ArrayAdapter<Model> {
             vh = (ViewHolder) convertView.getTag();
         }
 
-        Model item = getItem(position);
+        Preset item = getItem(position);
 
         vh.textViewName.setText(item.getName());
         vh.textViewAuthor.setText(item.getAuthor());
